@@ -8,4 +8,8 @@ export class CoursesService {
   listAllCourses() {
     return this.prisma.course.findMany();
   }
+
+  findById(id: string) {
+    return this.prisma.course.findUnique({ where: { id } });
+  }
 }
