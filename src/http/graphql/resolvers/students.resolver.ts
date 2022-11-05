@@ -17,7 +17,7 @@ export class StudentsResolver {
   @Query(() => Student)
   @UseGuards(AuthorizationGuard)
   me(@CurrentUser() authUser: AuthUser) {
-    return this.studentsService.findStudentByAuthUserId(authUser.sub);
+    return this.studentsService.findByAuthUserId(authUser.sub);
   }
 
   @Query(() => [Student])
