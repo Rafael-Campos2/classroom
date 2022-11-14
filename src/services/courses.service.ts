@@ -6,6 +6,11 @@ interface CreateCourseParams {
   title: string;
 }
 
+interface FindOrCreateCourseParams {
+  slug: string;
+  title: string;
+}
+
 @Injectable()
 export class CoursesService {
   constructor(private prisma: PrismaService) {}
@@ -30,5 +35,17 @@ export class CoursesService {
     }
 
     return this.prisma.course.create({ data: { title, slug } });
+  }
+
+  async findOrCreateCourse({ slug, title }: FindOrCreateCourseParams) {
+    let course = await this.prisma.course.findUnique({
+      where: { slug },
+    });
+
+    if (!course) {
+      course = await this.prisma.course.create({ data: { slug, title } });
+    }
+
+    return course;
   }
 }
